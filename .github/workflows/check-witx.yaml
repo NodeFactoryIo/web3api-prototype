@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generate markdown
-        uses: NodeFactoryIo/witx-md-generator-action
+        uses: NodeFactoryIo/witx-md-generator-action@master
         with:
           markdownPath: web3.md
           witxPath: web3.witx
