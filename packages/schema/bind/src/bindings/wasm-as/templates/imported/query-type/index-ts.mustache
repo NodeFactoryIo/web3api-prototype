@@ -2,6 +2,13 @@ import {
   w3_query,
   Nullable
 } from "@web3api/wasm-as";
+{{#methods}}
+{{#arguments}}
+{{#object}}
+import { {{type}} } from "../../{{type}}";
+{{/object}}
+{{/arguments}}
+{{/methods}}
 {{#methods.length}}
 import {
   {{#methods}}

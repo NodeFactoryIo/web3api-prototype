@@ -74,6 +74,10 @@ type TestImport_Query @imported(
   anotherMethod(
     arg: [String!]!
   ): Int64!
+
+  objectMethod(
+    argObject: CustomType!
+  ): CustomType!
 }
 
 type TestImport_Object @imported(

@@ -1,3 +1,4 @@
+import { CustomType } from "../../CustomType";
 import {
   Nullable,
   Write,
@@ -80,4 +81,32 @@ function writeanotherMethodArgs(
 export function deserializeanotherMethodResult(buffer: ArrayBuffer): i64 {
   const reader = new ReadDecoder(buffer);
   return reader.readInt64();
+}
+
+export function serializeobjectMethodArgs(input: {
+  argObject: CustomType
+}): ArrayBuffer {
+  const sizer = new WriteSizer();
+  writeobjectMethodArgs(sizer, input);
+  const buffer = new ArrayBuffer(sizer.length);
+  const encoder = new WriteEncoder(buffer);
+  writeobjectMethodArgs(encoder, input);
+  return buffer;
+}
+
+function writeobjectMethodArgs(
+  writer: Write,
+  input: {
+    argObject: CustomType
+  }
+) {
+  writer.writeMapLength(1);
+  writer.writeString("argObject");
+  writer.writeBytes(input.argObject.toBuffer());
+}
+
+export function deserializeobjectMethodResult(buffer: ArrayBuffer): CustomType {
+  const object = new CustomType();
+  object.fromBuffer(buffer);
+  return object;
 }

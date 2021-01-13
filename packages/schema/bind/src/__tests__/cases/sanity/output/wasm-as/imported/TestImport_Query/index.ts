@@ -2,11 +2,14 @@ import {
   w3_query,
   Nullable
 } from "@web3api/wasm-as";
+import { CustomType } from "../../CustomType";
 import {
   serializeimportedMethodArgs,
   deserializeimportedMethodResult,
   serializeanotherMethodArgs,
-  deserializeanotherMethodResult
+  deserializeanotherMethodResult,
+  serializeobjectMethodArgs,
+  deserializeobjectMethodResult
 } from "./serialization";
 
 export class TestImport_Query {
@@ -51,5 +54,21 @@ export class TestImport_Query {
       args
     );
     return deserializeanotherMethodResult(result);
+  }
+
+  public static objectMethod(input: {
+    argObject: CustomType
+  }): CustomType {
+    const args = serializeobjectMethodArgs(input);
+    const result = w3_query(
+      uri,
+      `query {
+        objectMethod(
+          argObject: $argObject
+        )
+      }`,
+      args
+    );
+    return deserializeobjectMethodResult(result);
   }
 }

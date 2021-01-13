@@ -1,4 +1,11 @@
 {{#methods.length}}
+{{#methods}}
+{{#arguments}}
+{{#object}}
+import { {{type}} } from "../../{{type}}";
+{{/object}}
+{{/arguments}}
+{{/methods}}
 import {
   Nullable,
   Write,
@@ -40,20 +47,29 @@ function write{{name}}Args(
     {{> serialize_array}}
   });
   {{/array}}
+  {{#object}}
+  writer.writeBytes(input.{{name}}.toBuffer());
+  {{/object}}
   {{/arguments}}
 }
 
 export function deserialize{{name}}Result(buffer: ArrayBuffer): {{#toWasm}}{{return.type}}{{/toWasm}} {
-  const reader = new ReadDecoder(buffer);
   {{#return}}
   {{#scalar}}
+  const reader = new ReadDecoder(buffer);
   return reader.read{{#toMsgPack}}{{type}}{{/toMsgPack}}();
   {{/scalar}}
   {{#array}}
+  const reader = new ReadDecoder(buffer);
   return reader.read{{#toMsgPack}}{{type}}{{/toMsgPack}}((reader: Read): {{#toWasm}}{{item.type}}{{/toWasm}} => {
     {{> deserialize_array}}
   });
   {{/array}}
+  {{#object}}
+  const object = new {{type}}();
+  object.fromBuffer(buffer);
+  return object;
+  {{/object}}
   {{/return}}
 }
 {{^last}}
