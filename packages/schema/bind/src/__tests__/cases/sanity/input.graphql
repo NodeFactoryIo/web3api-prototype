@@ -62,7 +62,6 @@ type TestImport_Query @imported(
   uri: "testimport.uri.eth",
   type: "Query"
 ) {
-  """TODO: Support object types as argument & return values"""
   importedMethod(
     str: String!
     optStr: String
@@ -77,6 +76,7 @@ type TestImport_Query @imported(
 
   objectMethod(
     argObject: CustomType!
+    importedArgObject: TestImport_Object!
   ): CustomType!
 }
 

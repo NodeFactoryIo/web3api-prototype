@@ -1,4 +1,5 @@
 import { CustomType } from "../../CustomType";
+import { TestImport_Object } from "../TestImport_Object";
 import {
   Nullable,
   Write,
@@ -84,7 +85,8 @@ export function deserializeanotherMethodResult(buffer: ArrayBuffer): i64 {
 }
 
 export function serializeobjectMethodArgs(input: {
-  argObject: CustomType
+  argObject: CustomType,
+  importedArgObject: TestImport_Object
 }): ArrayBuffer {
   const sizer = new WriteSizer();
   writeobjectMethodArgs(sizer, input);
@@ -97,12 +99,15 @@ export function serializeobjectMethodArgs(input: {
 function writeobjectMethodArgs(
   writer: Write,
   input: {
-    argObject: CustomType
+    argObject: CustomType,
+    importedArgObject: TestImport_Object
   }
 ) {
-  writer.writeMapLength(1);
+  writer.writeMapLength(2);
   writer.writeString("argObject");
   writer.writeBytes(input.argObject.toBuffer());
+  writer.writeString("importedArgObject");
+  writer.writeBytes(input.importedArgObject.toBuffer());
 }
 
 export function deserializeobjectMethodResult(buffer: ArrayBuffer): CustomType {

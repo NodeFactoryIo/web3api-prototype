@@ -3,6 +3,7 @@ import {
   Nullable
 } from "@web3api/wasm-as";
 import { CustomType } from "../../CustomType";
+import { TestImport_Object } from "../TestImport_Object";
 import {
   serializeimportedMethodArgs,
   deserializeimportedMethodResult,
@@ -57,14 +58,16 @@ export class TestImport_Query {
   }
 
   public static objectMethod(input: {
-    argObject: CustomType
+    argObject: CustomType,
+    importedArgObject: TestImport_Object
   }): CustomType {
     const args = serializeobjectMethodArgs(input);
     const result = w3_query(
       uri,
       `query {
         objectMethod(
-          argObject: $argObject
+          argObject: $argObject,
+          importedArgObject: $importedArgObject
         )
       }`,
       args
