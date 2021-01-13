@@ -33,6 +33,10 @@ export function deserialize{{name}}Args(argsBuf: ArrayBuffer): {
         {{> deserialize_array}}
       });
       {{/array}}
+      {{#object}}
+      const _{{name}} = new {{type}}();
+      _{{name}}.fromBuffer(reader.readBytes());
+      {{/object}}
     }
     {{/arguments}}
   }
@@ -47,7 +51,7 @@ export function deserialize{{name}}Args(argsBuf: ArrayBuffer): {
 
   return {
     {{#arguments}}
-    {{name}}: _{{name}}
+    {{name}}: _{{name}}{{^last}},{{/last}}
     {{/arguments}}
   };
 }
@@ -71,6 +75,9 @@ function write{{name}}Result(writer: Write, result: {{#toWasm}}{{return.type}}{{
     {{> serialize_array}}
   });
   {{/array}}
+  {{#object}}
+  writer.writeBytes(result.toBuffer());
+  {{/object}}
   {{/return}}
 }
 {{/methods}}

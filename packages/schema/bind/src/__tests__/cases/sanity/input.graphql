@@ -53,6 +53,11 @@ type Query @imports(
   queryMethod(
     arg: String!
   ): Int!
+
+  objectMethod(
+    argObject: CustomType!
+    importedArgObject: TestImport_Object!
+  ): CustomType!
 }
 
 #import { Query } into TestImport from "testimport.uri.eth"
