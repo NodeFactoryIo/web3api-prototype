@@ -43,8 +43,13 @@ type CustomType {
   crazyArray: [[[[UInt64!]]!]]
 }
 
+type NestedObject {
+  fieldA: String!
+}
+
 type AnotherType {
   prop: String
+  nestedObject: NestedObject!
 }
 
 type Query @imports(

@@ -6,6 +6,7 @@ import {
   WriteEncoder,
   Nullable
 } from "@web3api/wasm-as";
+import { NestedObject } from "../NestedObject";
 import { AnotherType } from "./";
 
 export function serializeAnotherType(type: AnotherType): ArrayBuffer {
@@ -18,9 +19,11 @@ export function serializeAnotherType(type: AnotherType): ArrayBuffer {
 }
 
 function writeAnotherType(writer: Write, type: AnotherType) {
-  writer.writeMapLength(1);
+  writer.writeMapLength(2);
   writer.writeString("prop");
   writer.writeNullableString(type.prop);
+  writer.writeString("nestedObject");
+  writer.writeBytes(type.nestedObject.toBuffer());
 }
 
 export function deserializeAnotherType(buffer: ArrayBuffer, type: AnotherType) {
@@ -33,6 +36,11 @@ export function deserializeAnotherType(buffer: ArrayBuffer, type: AnotherType) {
 
     if (field == "prop") {
       type.prop = reader.readNullableString();
+    }
+    else if (field == "nestedObject") {
+      const object = new NestedObject();
+      object.fromBuffer(reader.readBytes());
+      type.nestedObject = object;
     }
   }
 }

@@ -29,6 +29,9 @@ function write{{name}}(writer: Write, type: {{name}}) {
     {{> serialize_array}}
   });
   {{/array}}
+  {{#object}}
+  writer.writeBytes(type.{{name}}.toBuffer());
+  {{/object}}
   {{/properties}}
 }
 
@@ -50,6 +53,11 @@ export function deserialize{{name}}(buffer: ArrayBuffer, type: {{name}}) {
         {{> deserialize_array}}
       });
       {{/array}}
+      {{#object}}
+      const object = new {{type}}();
+      object.fromBuffer(reader.readBytes());
+      type.{{name}} = object;
+      {{/object}}
     }
     {{/properties}}
   }

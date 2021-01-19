@@ -1,4 +1,5 @@
 import { Nullable } from "@web3api/wasm-as";
+import { NestedObject } from "../NestedObject";
 import {
   serializeAnotherType,
   deserializeAnotherType
@@ -6,6 +7,7 @@ import {
 
 export class AnotherType {
   prop: string | null;
+  nestedObject: NestedObject;
 
   toBuffer(): ArrayBuffer {
     return serializeAnotherType(this);
