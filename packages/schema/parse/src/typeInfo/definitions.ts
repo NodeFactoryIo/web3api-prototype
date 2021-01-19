@@ -76,6 +76,23 @@ export function createAnyDefinition(
   };
 }
 
+const scalars = [
+  "UInt",
+  "UInt8",
+  "UInt16",
+  "UInt32",
+  "UInt64",
+  "Int",
+  "Int8",
+  "Int16",
+  "Int32",
+  "Int64",
+  "String",
+];
+export function isScalar(type: string): boolean {
+  return scalars.includes(type);
+}
+
 export type ScalarDefinition = GenericDefinition;
 export function createScalarDefinition(
   name: string,

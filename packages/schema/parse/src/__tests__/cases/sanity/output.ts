@@ -117,13 +117,30 @@ export const output: TypeInfo = {
       ],
     },
     {
-      ...createObjectDefinition("AnotherType"),
+      ...createObjectDefinition("NestedNestedObject"),
       properties: [createScalarPropertyDefinition("prop", "?String", false)],
+    },
+    {
+      ...createObjectDefinition("NestedObject"),
+      properties: [
+        createScalarPropertyDefinition("fieldA", "?String", false),
+        createObjectPropertyDefinition(
+          "nestedObject",
+          "?NestedNestedObject",
+          false,
+          []
+        ),
+      ],
     },
     {
       ...createObjectDefinition("UserObject"),
       properties: [
-        createScalarPropertyDefinition("fieldA", "?String", false),
+        createObjectPropertyDefinition(
+          "nestedNestedObject",
+          "?NestedObject",
+          false,
+          []
+        ),
         createScalarPropertyDefinition("fieldB", "Int", true),
       ],
     },
@@ -244,7 +261,12 @@ export const output: TypeInfo = {
           ...createMethodDefinition("query", "userObjectMethod"),
           arguments: [
             createObjectPropertyDefinition("userObject", "?UserObject", false, [
-              createScalarPropertyDefinition("fieldA", "?String", false),
+              createObjectPropertyDefinition(
+                "nestedNestedObject",
+                "?NestedObject",
+                false,
+                []
+              ),
               createScalarPropertyDefinition("fieldB", "Int", true),
             ]),
           ],
@@ -253,7 +275,12 @@ export const output: TypeInfo = {
             "UserObject",
             true,
             [
-              createScalarPropertyDefinition("fieldA", "?String", false),
+              createObjectPropertyDefinition(
+                "nestedNestedObject",
+                "?NestedObject",
+                false,
+                []
+              ),
               createScalarPropertyDefinition("fieldB", "Int", true),
             ]
           ),

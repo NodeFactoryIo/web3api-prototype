@@ -43,12 +43,17 @@ type CustomType {
   crazyArray: [[[[UInt64!]]!]]
 }
 
-type AnotherType {
+type NestedNestedObject {
   prop: String
 }
 
-type UserObject {
+type NestedObject {
   fieldA: String
+  nestedObject: NestedNestedObject
+}
+
+type UserObject {
+  nestedNestedObject: NestedObject
   fieldB: Int!
 }
 
