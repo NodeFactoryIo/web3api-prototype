@@ -6,3 +6,7 @@ return reader.read{{#toMsgPack}}{{type}}{{/toMsgPack}}((reader: Read): {{#toWasm
   {{> deserialize_array}}
 });
 {{/array}}
+{{#object}}
+{{> deserialize_object }}
+return object;
+{{/object}}

@@ -6,6 +6,8 @@ import {
   createPropertyDefinition,
   createScalarDefinition,
   createArrayDefinition,
+  isScalar,
+  createObjectDefinition,
 } from "../typeInfo";
 
 import {
@@ -126,11 +128,21 @@ const visitorEnter = (typeInfo: TypeInfo, state: State) => ({
 
     const modifier = state.nonNullType ? "" : "?";
 
-    property.scalar = createScalarDefinition(
-      property.name,
-      modifier + node.name.value,
-      state.nonNullType
-    );
+    if (isScalar(node.name.value)) {
+      property.scalar = createScalarDefinition(
+        property.name,
+        modifier + node.name.value,
+        state.nonNullType
+      );
+    } else {
+      property.object = createObjectDefinition(
+        property.name,
+        modifier + node.name.value,
+        state.nonNullType
+      );
+      property.type = modifier + node.name.value;
+    }
+
     state.nonNullType = false;
   },
   ListType: (_node: ListTypeNode) => {
