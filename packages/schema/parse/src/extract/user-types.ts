@@ -102,9 +102,6 @@ const visitorEnter = (typeInfo: TypeInfo, state: State) => ({
     state.currentUnknown = property.array;
     state.nonNullType = false;
   },
-  InputObjectType: (node: ObjectFieldNode) => {
-    console.log(node);
-  },
   FieldDefinition: (node: FieldDefinitionNode) => {
     const type = state.currentType;
 
