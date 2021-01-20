@@ -39,7 +39,7 @@ function populateArrayType(array: ArrayDefinition) {
     if (currentArray.array) {
       currentArray = currentArray.array;
       populateArrayType(currentArray);
-    } else if (currentArray.scalar) {
+    } else if (currentArray.scalar || currentArray.object) {
       baseTypeFound = true;
     } else {
       throw Error(
@@ -54,8 +54,10 @@ function populateArrayType(array: ArrayDefinition) {
 
   if (array.array) {
     array.item = array.array;
-  } else {
+  } else if (array.scalar) {
     array.item = array.scalar;
+  } else {
+    array.item = array.object;
   }
 
   if (!array.item) {

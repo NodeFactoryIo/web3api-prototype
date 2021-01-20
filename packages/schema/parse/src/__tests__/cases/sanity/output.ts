@@ -114,6 +114,12 @@ export const output: TypeInfo = {
             )
           )
         ),
+        createArrayPropertyDefinition(
+          "objectArray",
+          "?[AnotherType]",
+          false,
+          createObjectDefinition("objectArray", "AnotherType", true)
+        ),
       ],
     },
     {
