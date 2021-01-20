@@ -30,7 +30,7 @@ function write{{name}}(writer: Write, type: {{name}}) {
   });
   {{/array}}
   {{#object}}
-  writer.writeBytes(type.{{name}}.toBuffer());
+  {{> serialize_object}}
   {{/object}}
   {{/properties}}
 }
@@ -54,8 +54,7 @@ export function deserialize{{name}}(buffer: ArrayBuffer, type: {{name}}) {
       });
       {{/array}}
       {{#object}}
-      const object = new {{type}}();
-      object.fromBuffer(reader.readBytes());
+      {{> deserialize_object}}
       type.{{name}} = object;
       {{/object}}
     }

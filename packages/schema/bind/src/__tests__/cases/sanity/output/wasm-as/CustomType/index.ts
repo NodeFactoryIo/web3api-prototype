@@ -1,4 +1,5 @@
 import { Nullable } from "@web3api/wasm-as";
+import { NestedObject } from "../NestedObject";
 import {
   serializeCustomType,
   deserializeCustomType
@@ -26,6 +27,7 @@ export class CustomType {
   uOptArrayOptArray: Array<Array<Nullable<u64>> | null>;
   uArrayOptArrayArray: Array<Array<Array<u64>> | null>;
   crazyArray: Array<Array<Array<Array<u64> | null>> | null> | null;
+  objectArray: Array<NestedObject> | null;
 
   toBuffer(): ArrayBuffer {
     return serializeCustomType(this);

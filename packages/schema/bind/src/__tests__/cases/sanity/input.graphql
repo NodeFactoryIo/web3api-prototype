@@ -41,6 +41,7 @@ type CustomType {
   uOptArrayOptArray: [[UInt64]]!
   uArrayOptArrayArray: [[[UInt64!]!]]!
   crazyArray: [[[[UInt64!]]!]]
+  objectArray: [NestedObject!]
 }
 
 type NestedObject {

@@ -12,6 +12,9 @@ export class {{name}} {
   {{#array}}
   {{name}}: {{#toWasm}}{{type}}{{/toWasm}};
   {{/array}}
+  {{#object}}
+  {{name}}: {{#toWasm}}{{type}}{{/toWasm}};
+  {{/object}}
   {{/properties}}
 
   toBuffer(): ArrayBuffer {

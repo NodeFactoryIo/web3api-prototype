@@ -6,6 +6,7 @@ import {
   WriteEncoder,
   Nullable
 } from "@web3api/wasm-as";
+import { NestedObject } from "../NestedObject";
 import { CustomType } from "./";
 
 export function serializeCustomType(type: CustomType): ArrayBuffer {
@@ -18,7 +19,7 @@ export function serializeCustomType(type: CustomType): ArrayBuffer {
 }
 
 function writeCustomType(writer: Write, type: CustomType) {
-  writer.writeMapLength(21);
+  writer.writeMapLength(22);
   writer.writeString("str");
   writer.writeString(type.str);
   writer.writeString("optStr");
@@ -90,6 +91,10 @@ function writeCustomType(writer: Write, type: CustomType) {
         });
       });
     });
+  });
+  writer.writeString("objectArray");
+  writer.writeNullableArray(type.objectArray, (writer: Write, item: NestedObject): void => {
+    writer.writeBytes(type.objectArray.toBuffer());
   });
 }
 
@@ -192,6 +197,13 @@ export function deserializeCustomType(buffer: ArrayBuffer, type: CustomType) {
             });
           });
         });
+      });
+    }
+    else if (field == "objectArray") {
+      type.objectArray = reader.readNullableArray((reader: Read): NestedObject => {
+        const object = new NestedObject();
+        object.fromBuffer(reader.readBytes());
+        return object;
       });
     }
   }

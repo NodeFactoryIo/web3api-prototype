@@ -6,3 +6,6 @@ writer.write{{#toMsgPack}}{{type}}{{/toMsgPack}}(item, (writer: Write, item: {{#
   {{> serialize_array}}
 });
 {{/array}}
+{{#object}}
+{{> serialize_object}}
+{{/object}}
